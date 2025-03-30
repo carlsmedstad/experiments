@@ -4,8 +4,7 @@ output=index.html
 printf '%s\n' '<!DOCTYPE html>' > "$output"
 printf '%s\n' '<html><body><h1>Repository Index</h1><ul>' >> "$output"
 
-for file in *; do
-  [ "$file" = "$output" ] && continue
+git ls-files | while IFS= read -r file; do
   printf '<li><a href="%s">%s</a></li>\n' "$file" "$file" >> "$output"
 done
 
