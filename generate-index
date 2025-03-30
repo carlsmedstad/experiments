@@ -1,11 +1,25 @@
 #!/bin/sh -eu
 
 output=index.html
-printf '%s\n' '<!DOCTYPE html>' > "$output"
-printf '%s\n' '<html><body><h1>Repository Index</h1><ul>' >> "$output"
+cat > "$output" <<EOF
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Repository Index</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h1>Repository Index</h1>
+  <ul>
+EOF
 
 git ls-files | while IFS= read -r file; do
-  printf '<li><a href="%s">%s</a></li>\n' "$file" "$file" >> "$output"
+  printf '    <li><a href="%s">%s</a></li>\n' "$file" "$file" >> "$output"
 done
 
-printf '%s\n' '</ul></body></html>' >> "$output"
+cat >> "$output" <<EOF
+  </ul>
+</body>
+</html>
+EOF
